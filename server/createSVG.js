@@ -116,7 +116,7 @@ async function toSVG(obj, writeable) {
 		'<svg xmlns="http://www.w3.org/2000/svg" version="1.1" ' +
 		'width="' + dim[0] + '" height="' + dim[1] + '">' +
 		'<defs><style type="text/css"><![CDATA[' +
-		'text {font-family:"Arial"}' +
+		'text {font-family:"Helvetica"}' +
 		'path {fill:none;stroke-linecap:round;stroke-linejoin:round;}' +
 		'rect {fill:none}' +
 		']]></style></defs>'

@@ -26,8 +26,8 @@
 
 (function grid() { //Code isolation
 
-    var index = 0; //grid off by default
-    var states = ["none", "url(#grid)", "url(#dots)"];
+    var index = 3; //grid off by default
+    var states = ["none", "url(#grid)", "url(#dots)", "url(#img1)"];
 
     function toggleGrid(evt) {
         index = (index + 1) % states.length;
@@ -86,10 +86,28 @@
             r: "2"
         }));
 
+        // img1
+        var img1 = Tools.createSVGElement("pattern", {
+            id: "img1",
+            width: "816px",
+            height: "1056px",
+            x: "0",
+            y: "0",
+            patternUnits: "userSpaceOnUse"
+        });
+        img1.appendChild(Tools.createSVGElement("image", {
+            href: "dir1/Factura-2131.jpg",
+            x: "0",
+            y: "0",
+            width: "816px",
+            height: "1056px"
+        }));
+
         var defs = Tools.svg.getElementById("defs");
         defs.appendChild(smallGrid);
         defs.appendChild(grid);
         defs.appendChild(dots);
+        defs.appendChild(img1);
     }
 
     var gridContainer = (function init() {

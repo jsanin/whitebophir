@@ -3,7 +3,7 @@ const app_root = path.dirname(__dirname); // Parent of the directory where this 
 
 module.exports = {
     /** Port on which the application will listen */
-    PORT: parseInt(process.env['PORT']) || 8080,
+    PORT: parseInt(process.env['PORT']) || 9090,
 
     /** Host on which the application will listen (defaults to undefined,
         hence listen on all interfaces on all IP addresses, but could also be

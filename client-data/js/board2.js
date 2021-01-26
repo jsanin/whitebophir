@@ -64,7 +64,7 @@ Tools.connect = function () {
 
 
 	this.socket = io.connect('', {
-		"path": window.location.pathname.split("/boards/")[0] + "/socket.io",
+		"path": "/socket.io",
 		"reconnection": true,
 		"reconnectionDelay": 100, //Make the xhr connections as fast as possible
 		"timeout": 1000 * 60 * 20 // Timeout after 20 minutes
@@ -86,15 +86,16 @@ Tools.connect = function () {
 Tools.connect();
 
 Tools.boardName = (function () {
-	var path = window.location.pathname.split("/");
-	return decodeURIComponent(path[path.length - 1]);
+	//var path = window.location.pathname.split("/");
+	//return decodeURIComponent(path[path.length - 1]);
+	return "board14";
 })();
 
 //Get the board as soon as the page is loaded
 Tools.socket.emit("getboard", Tools.boardName);
 
 Tools.HTML = {
-	template: new Minitpl("#tools > .tool"),
+	//template: new Minitpl("#tools > .tool"),
 	addShortcut: function addShortcut(key, callback) {
 		window.addEventListener("keydown", function (e) {
 			if (e.key === key && !e.target.matches("input[type=text], textarea")) {
@@ -160,8 +161,9 @@ Tools.HTML = {
 		link.type = "text/css";
 		document.head.appendChild(link);
 	},
-	colorPresetTemplate: new Minitpl("#colorPresetSel .colorPresetButton"),
-	addColorButton: function (button) {
+	//colorPresetTemplate: new Minitpl("#colorPresetSel .colorPresetButton"),
+	addColorButton: function (button) {},
+	addColorButton2: function (button) {
 		var setColor = Tools.setColor.bind(Tools, button.color);
 		if (button.key) this.addShortcut(button.key, setColor);
 		return this.colorPresetTemplate.add(function (elem) {
@@ -293,6 +295,7 @@ Tools.removeToolListeners = function removeToolListeners(tool) {
 	}
 };
 
+/*
 (function () {
 	// Handle secondary tool switch with shift (key code 16)
 	function handleShift(active, evt) {
@@ -302,7 +305,7 @@ Tools.removeToolListeners = function removeToolListeners(tool) {
 	}
 	window.addEventListener("keydown", handleShift.bind(null, true));
 	window.addEventListener("keyup", handleShift.bind(null, false));
-})();
+})();*/
 
 Tools.send = function (data, toolName) {
 	toolName = toolName || Tools.curTool.name;
@@ -364,6 +367,7 @@ function batchCall(fn, args) {
 
 // Call messageForTool recursively on the message and its children
 function handleMessage(message) {
+	console.debug("Message received. ", message);
 	//Check if the message is in the expected format
 	if (!message.tool && !message._children) {
 		console.error("Received a badly formatted message (no tool). ", message);
@@ -589,7 +593,7 @@ Tools.colorPresets = [
 Tools.color_chooser = document.getElementById("chooseColor");
 
 Tools.setColor = function (color) {
-	Tools.color_chooser.value = color;
+//	Tools.color_chooser.value = color;
 };
 
 Tools.getColor = (function color() {
@@ -612,7 +616,7 @@ Tools.setSize = (function size() {
 			handler(size);
 		});
 	}
-	update();
+	//update();
 
 	chooser.onchange = chooser.oninput = update;
 	return function (value) {

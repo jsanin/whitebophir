@@ -262,7 +262,7 @@ path {
 }
 
 text {
-	font-family:"Arial", "Helvetica", sans-serif;
+	font-family:"Helvetica";
 	user-select:none;
 	-moz-user-select:none;
 }
