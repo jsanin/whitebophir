@@ -19,7 +19,12 @@ function noFail(fn) {
 }
 
 function startIO(app) {
-	io = iolib(app);
+	io = iolib(app, {
+		cors: {
+			origin: "https://testeduac.local:8043",
+			methods: ["GET", "POST"]
+		}
+	});
 	io.on('connection', noFail(socketConnection));
 	return io;
 }
