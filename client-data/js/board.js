@@ -51,6 +51,11 @@ Tools.showMyCursor = true;
 
 Tools.isIE = /MSIE|Trident/.test(window.navigator.userAgent);
 
+Tools.boardName = (function () {
+	var path = window.location.pathname.split("/");
+	return decodeURIComponent(path[path.length - 1]);
+})();
+
 Tools.socket = null;
 Tools.connect = function () {
 	var self = this;
@@ -63,7 +68,7 @@ Tools.connect = function () {
 	}
 
 
-	this.socket = io.connect('', {
+	this.socket = io.connect('http://localhost:9090?boardName=' + Tools.boardName, {
 		"path": window.location.pathname.split("/boards/")[0] + "/socket.io",
 		"reconnection": true,
 		"reconnectionDelay": 100, //Make the xhr connections as fast as possible

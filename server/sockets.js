@@ -36,10 +36,21 @@ function getBoard(name) {
 	if (boards.hasOwnProperty(name)) {
 		return boards[name];
 	} else {
-		var board = BoardData.load(name);
-		boards[name] = board;
+		// var board = BoardData.load(name);
+		// boards[name] = board;
+		// return board;
+		return null;
+	}
+}
+
+function createBoard(name) {
+	var board = getBoard(name);
+	if(board) {
 		return board;
 	}
+	board = BoardData.load(name);
+	boards[name] = board;
+	return board;
 }
 
 /**
@@ -47,6 +58,12 @@ function getBoard(name) {
  * @param {iolib.Socket} socket 
  */
 function socketConnection(socket) {
+	var boardName = socket.request._query.boardName;
+	var board = getBoard(boardName);
+	if(!board) {
+		socket.emit("error", { error: 'board not found: ' + boardName });
+		return;
+	}
 
 	async function joinBoard(name) {
 		// Default to the public board
@@ -170,4 +187,5 @@ function generateUID(prefix, suffix) {
 
 if (exports) {
 	exports.start = startIO;
+	exports.createBoard = createBoard;
 }
