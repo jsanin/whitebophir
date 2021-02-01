@@ -21,6 +21,7 @@ if (parseFloat(process.versions.node) < MIN_NODE_VERSION) {
 }
 
 var io = sockets.start(app);
+var createBoard = sockets.createBoard;
 
 app.listen(config.PORT, config.HOST);
 log("server started", { port: config.PORT });
@@ -162,7 +163,12 @@ function handleRequest(request, response) {
 				response.end(bundleString);
 			});
 			break;
-
+		case "create":
+			validateBoardName(parts[1]);
+			createBoard(parts[1]);
+			response.writeHead(204, { 'Content-Type': 'text/plain' });
+			response.end();
+			break;
 		case "": // Index page
 			logRequest(request);
 			indexTemplate.serve(request, response);
