@@ -39,4 +39,8 @@ module.exports = {
 
     /** Blocked Tools. A comma-separated list of tools that should not appear on boards. */
     BLOCKED_TOOLS: (process.env['WBO_BLOCKED_TOOLS'] || "").split(','),
+
+    RABBIT_MQ_URI: 'amqp://eduac.services-content:d3v3l0p_R488it!@localhost/eduac.qa1',
+
+    QUEUE_NAME: 'eduac.hello',
 };

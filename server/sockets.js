@@ -2,6 +2,8 @@ var iolib = require('socket.io')
 	, log = require("./log.js").log
 	, BoardData = require("./boardData.js").BoardData
 	, config = require("./configuration");
+const {connectRabbitMq, publishMessage} = require('./connect-mq.js');
+
 
 /** Map from name to *promises* of BoardData
 	@type {Object<string, Promise<BoardData>>}
@@ -143,6 +145,7 @@ function socketConnection(socket) {
 				log('disconnection', { 'board': board.name, 'users': board.users.size });
 				if (userCount === 0) {
 					board.save();
+					publishMessage(board);
 					delete boards[room];
 				}
 			}
@@ -184,6 +187,9 @@ function generateUID(prefix, suffix) {
 	if (suffix) uid = uid + suffix;
 	return uid;
 }
+
+// Connecto to rabbitMQ. See configuration RABBIT_MQ_URI and QUEUE_NAME for connection information
+connectRabbitMq();
 
 if (exports) {
 	exports.start = startIO;
